@@ -3,88 +3,719 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이희원 - 자기소개</title>
+    <title>이희원 - Editorial Designer</title>
     <style>
+        /* ===== 기본 스타일 ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            /* 파스텔 드림 색상 팔레트 */
+            --color-pink: #FFE5EC;
+            --color-lavender: #C7CEEA;
+            --color-mint: #ECFFF9;
+            --color-cream: #FFFFE3;
+            --color-text: #2c3e50;
+            --color-text-light: #6c7a89;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--color-text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== 분할 스크린 레이아웃 ===== */
+        .split-container {
             display: flex;
-            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* 왼쪽 고정 영역 */
+        .left-panel {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 50%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-lavender) 100%);
+            display: flex;
             align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            z-index: 10;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .container {
+
+        .left-content {
             text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 60px 80px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-in;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
         }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
+
+        @keyframes fadeInUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .profile-image {
             width: 200px;
             height: 200px;
             border-radius: 50%;
+            margin-bottom: 2rem;
+            border: 5px solid rgba(255, 255, 255, 0.5);
             object-fit: cover;
-            margin-bottom: 30px;
-            border: 5px solid white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        h1 {
-            font-size: 4rem;
-            color: #333;
-            margin-bottom: 20px;
+
+        .profile-image:hover {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        .left-content h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
             font-weight: 700;
-            letter-spacing: -2px;
         }
-        
-        p {
+
+        .left-content .job-title {
             font-size: 1.5rem;
-            color: #666;
+            color: var(--color-text-light);
+            margin-bottom: 1.5rem;
             font-weight: 300;
+            letter-spacing: 2px;
         }
-        
+
+        .left-content .intro {
+            font-size: 1.1rem;
+            color: var(--color-text);
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 오른쪽 스크롤 영역 */
+        .right-panel {
+            margin-left: 50%;
+            width: 50%;
+            background: white;
+        }
+
+        /* ===== 섹션 공통 스타일 ===== */
+        section {
+            padding: 5rem 3rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--color-text);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-lavender), var(--color-pink));
+            border-radius: 2px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-title:hover::after {
+            width: 100%;
+        }
+
+        /* ===== About 섹션 ===== */
+        #about {
+            background: linear-gradient(135deg, var(--color-mint) 0%, var(--color-cream) 100%);
+        }
+
+        .about-content {
+            max-width: 600px;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            color: var(--color-text-light);
+        }
+
+        /* ===== Skills 섹션 ===== */
+        #skills {
+            background: white;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-lavender) 50%, var(--color-mint) 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .skill-card p {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+        }
+
+        /* ===== Projects 섹션 ===== */
+        #projects {
+            background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-mint) 100%);
+        }
+
+        .project-card {
+            margin-bottom: 4rem;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            padding: 2rem;
+        }
+
+        .project-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .project-info p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--color-text-light);
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: var(--color-lavender);
+            color: var(--color-text);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: background 0.3s ease;
+        }
+
+        .tag:hover {
+            background: var(--color-pink);
+        }
+
+        /* ===== Contact 섹션 ===== */
+        #contact {
+            background: linear-gradient(135deg, var(--color-lavender) 0%, var(--color-pink) 100%);
+            text-align: center;
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--color-text);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--color-text);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--color-pink);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--color-lavender);
+        }
+
+        /* ===== 반응형 디자인 ===== */
+        @media (max-width: 1024px) {
+            .left-panel {
+                position: relative;
+                width: 100%;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .right-panel {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .split-container {
+                flex-direction: column;
+            }
+
+            section {
+                padding: 3rem 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .left-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 40px 50px;
+            .left-content h1 {
+                font-size: 2rem;
             }
-            
-            h1 {
-                font-size: 3rem;
-            }
-            
-            p {
+
+            .left-content .job-title {
                 font-size: 1.2rem;
             }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            section {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* ===== 스크롤바 스타일 ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-cream);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-lavender);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-pink);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="images/profile.jpg" alt="이희원 프로필" class="profile-image">
-        <h1>이희원</h1>
-        <p>이희원의 포트폴리오 사이트에 
-            ✩⡱어서오세요⋰˚✩</p>
+    <!-- 분할 스크린 컨테이너 -->
+    <div class="split-container">
+        <!-- 왼쪽 고정 패널 -->
+        <div class="left-panel">
+            <div class="left-content">
+                <img src="https://via.placeholder.com/200/FFE5EC/2c3e50?text=HW" alt="이희원 프로필" class="profile-image">
+                <h1>이희원</h1>
+                <p class="job-title">Editorial Designer</p>
+                <p class="intro">정보를 명확하고 감각적으로 전달하는 편집 디자이너입니다.</p>
+            </div>
+        </div>
+
+        <!-- 오른쪽 스크롤 패널 -->
+        <div class="right-panel">
+            <!-- About Me 섹션 -->
+            <section id="about">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <p>
+                        안녕하세요, 편집 디자이너 이희원입니다. 복잡한 정보를 명확하고 아름답게 전달하는 것이 저의 전문 분야입니다.
+                    </p>
+                    <p>
+                        타이포그래피, 레이아웃, 색채 이론을 기반으로 독자의 시선을 사로잡는 디자인을 만듭니다. 
+                        책, 잡지, 브로슈어부터 디지털 콘텐츠까지 다양한 매체에서 경험을 쌓아왔습니다.
+                    </p>
+                    <p>
+                        디자인은 단순히 예쁜 것이 아니라, 효과적인 커뮤니케이션 도구라고 믿습니다. 
+                        항상 독자의 입장에서 생각하며, 정보와 감성이 조화를 이루는 작업물을 만들어갑니다.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Skills 섹션 -->
+            <section id="skills">
+                <h2 class="section-title">Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">🎨</div>
+                        <h3>Editorial Design</h3>
+                        <p>책, 잡지, 브로슈어 등 다양한 인쇄물 디자인</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">✏️</div>
+                        <h3>Typography</h3>
+                        <p>한글/영문 타이포그래피 및 레터링</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">📐</div>
+                        <h3>Layout Design</h3>
+                        <p>그리드 시스템 기반 레이아웃 구성</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🖥️</div>
+                        <h3>Digital Publishing</h3>
+                        <p>웹진, e-book 등 디지털 콘텐츠 제작</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🎯</div>
+                        <h3>Brand Identity</h3>
+                        <p>브랜드 가이드 및 일관성 있는 디자인</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">📊</div>
+                        <h3>Infographic</h3>
+                        <p>데이터 시각화 및 정보 디자인</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects 섹션 -->
+            <section id="projects">
+                <h2 class="section-title">Projects</h2>
+                
+                <!-- 프로젝트 1 -->
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/800x300/C7CEEA/2c3e50?text=Magazine+Layout" alt="매거진 레이아웃 프로젝트" class="project-image">
+                    <div class="project-info">
+                        <h3>Culture & Art Magazine</h3>
+                        <p>
+                            문화예술 전문 매거진의 편집 디자인 작업입니다. 
+                            섬세한 타이포그래피와 여백의 조화를 통해 고급스러운 분위기를 연출했으며, 
+                            독자가 콘텐츠에 집중할 수 있도록 가독성을 최우선으로 고려했습니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Editorial Design</span>
+                            <span class="tag">Typography</span>
+                            <span class="tag">Print</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 2 -->
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/800x300/FFE5EC/2c3e50?text=Book+Cover+Design" alt="북 커버 디자인" class="project-image">
+                    <div class="project-info">
+                        <h3>Literary Book Cover Series</h3>
+                        <p>
+                            문학 시리즈 도서의 커버 디자인 작업입니다. 
+                            각 책의 내용과 분위기를 반영하면서도 시리즈로서의 통일감을 유지하도록 디자인했습니다. 
+                            심플한 일러스트와 타이포그래피의 조화로 감성적인 표현을 완성했습니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Book Design</span>
+                            <span class="tag">Illustration</span>
+                            <span class="tag">Series Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 3 -->
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/800x300/ECFFF9/2c3e50?text=Brand+Brochure" alt="브랜드 브로슈어" class="project-image">
+                    <div class="project-info">
+                        <h3>Corporate Brand Brochure</h3>
+                        <p>
+                            기업 브랜드 소개 브로슈어 디자인입니다. 
+                            명확한 정보 전달과 함께 브랜드의 전문성과 신뢰감을 시각적으로 표현했습니다. 
+                            인포그래픽과 다이어그램을 활용하여 복잡한 정보를 직관적으로 이해할 수 있도록 구성했습니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Brochure Design</span>
+                            <span class="tag">Infographic</span>
+                            <span class="tag">Corporate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 4 -->
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/800x300/FFFFE3/2c3e50?text=Digital+Magazine" alt="디지털 매거진" class="project-image">
+                    <div class="project-info">
+                        <h3>Digital Lifestyle Web Magazine</h3>
+                        <p>
+                            라이프스타일 웹진의 디지털 편집 디자인 작업입니다. 
+                            다양한 디바이스에서 최적의 가독성을 제공하도록 반응형으로 설계했으며, 
+                            인터랙티브한 요소를 더해 독자의 몰입도를 높였습니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Digital Publishing</span>
+                            <span class="tag">Responsive Design</span>
+                            <span class="tag">Web Magazine</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact 섹션 -->
+            <section id="contact">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-info">
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                        프로젝트 문의나 협업 제안이 있으시다면<br>
+                        언제든지 연락 주세요!
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:heewon.lee@example.com" class="contact-btn">📧 Email</a>
+                        <a href="https://instagram.com" target="_blank" class="contact-btn">📸 Instagram</a>
+                        <a href="https://linkedin.com" target="_blank" class="contact-btn">💼 LinkedIn</a>
+                        <a href="https://behance.net" target="_blank" class="contact-btn">🎨 Behance</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer>
+                <p>© 2025 이희원. Powered by <a href="https://ai.triz.kr" target="_blank">AI Portfolio Workshop</a>.</p>
+            </footer>
+        </div>
     </div>
+
+    <script>
+        // ===== 스크롤 애니메이션 =====
+        // IntersectionObserver를 사용하여 섹션이 뷰포트에 들어올 때 애니메이션 실행
+        const observerOptions = {
+            threshold: 0.1, // 섹션의 10%가 보일 때 트리거
+            rootMargin: '0px 0px -50px 0px' // 하단에서 50px 전에 트리거
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // 모든 섹션에 observer 적용
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // ===== 스무스 스크롤 =====
+        // 앵커 링크 클릭 시 부드러운 스크롤 효과
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ===== 프로젝트 카드 호버 효과 개선 =====
+        // 마우스 움직임에 따른 미묘한 3D 효과
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // ===== 스킬 카드 순차적 애니메이션 =====
+        // 스킬 섹션이 보일 때 카드들이 순차적으로 나타남
+        const skillsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const cards = entry.target.querySelectorAll('.skill-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(30px)';
+                            setTimeout(() => {
+                                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 50);
+                        }, index * 100);
+                    });
+                    skillsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        const skillsSection = document.querySelector('#skills');
+        if (skillsSection) {
+            skillsObserver.observe(skillsSection);
+        }
+
+        // ===== 페이지 로드 완료 후 초기 애니메이션 =====
+        window.addEventListener('load', () => {
+            // 왼쪽 패널 컨텐츠 애니메이션
+            const leftContent = document.querySelector('.left-content');
+            if (leftContent) {
+                leftContent.style.opacity = '0';
+                setTimeout(() => {
+                    leftContent.style.transition = 'opacity 1s ease, transform 1s ease';
+                    leftContent.style.opacity = '1';
+                }, 100);
+            }
+        });
+
+        // ===== 반응형 처리 =====
+        // 화면 크기에 따라 레이아웃 동적 조정
+        function handleResize() {
+            const leftPanel = document.querySelector('.left-panel');
+            const rightPanel = document.querySelector('.right-panel');
+            
+            if (window.innerWidth <= 1024) {
+                // 태블릿/모바일: 세로 레이아웃
+                leftPanel.style.position = 'relative';
+                leftPanel.style.width = '100%';
+                rightPanel.style.marginLeft = '0';
+                rightPanel.style.width = '100%';
+            } else {
+                // 데스크톱: 분할 레이아웃
+                leftPanel.style.position = 'fixed';
+                leftPanel.style.width = '50%';
+                rightPanel.style.marginLeft = '50%';
+                rightPanel.style.width = '50%';
+            }
+        }
+
+        // 초기 실행 및 리사이즈 이벤트 리스너
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        // ===== 성능 최적화 =====
+        // 디바운스 함수로 리사이즈 이벤트 최적화
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        window.addEventListener('resize', debounce(handleResize, 250));
+    </script>
 </body>
 </html>
