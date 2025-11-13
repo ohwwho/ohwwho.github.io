@@ -259,6 +259,7 @@
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-top: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .tag {
@@ -274,6 +275,25 @@
             background: var(--color-pink);
         }
 
+        .project-link {
+            display: inline-block;
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--color-lavender);
+            transform: translateX(5px);
+        }
+
+        .project-card a {
+            display: block;
+            overflow: hidden;
+        }
+
         /* ===== Contact 섹션 ===== */
         #contact {
             background: linear-gradient(135deg, var(--color-lavender) 0%, var(--color-pink) 100%);
@@ -285,29 +305,44 @@
             margin: 0 auto;
         }
 
-        .contact-links {
+        .contact-details {
             display: flex;
-            justify-content: center;
-            gap: 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
             margin-top: 2rem;
         }
 
-        .contact-btn {
-            display: inline-block;
-            padding: 1rem 2rem;
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 1.1rem;
             background: white;
-            color: var(--color-text);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .contact-btn:hover {
+        .contact-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        .contact-item a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--color-lavender);
         }
 
         /* ===== Footer ===== */
@@ -413,10 +448,11 @@
         <!-- 왼쪽 고정 패널 -->
         <div class="left-panel">
             <div class="left-content">
-                <img src="https://via.placeholder.com/200/FFE5EC/2c3e50?text=HW" alt="이희원 프로필" class="profile-image">
+                <img src="images/profile.jpg" alt="이희원 프로필" class="profile-image">
                 <h1>이희원</h1>
                 <p class="job-title">Editorial Designer</p>
                 <p class="intro">정보를 명확하고 감각적으로 전달하는 편집 디자이너입니다.</p>
+                <p style="font-size: 0.95rem; color: var(--color-text-light); margin-top: 1rem;">📍 Seoul, Korea</p>
             </div>
         </div>
 
@@ -427,15 +463,14 @@
                 <h2 class="section-title">About Me</h2>
                 <div class="about-content">
                     <p>
-                        안녕하세요, 편집 디자이너 이희원입니다. 복잡한 정보를 명확하고 아름답게 전달하는 것이 저의 전문 분야입니다.
+                        안녕하세요! 정보를 명확하고 감각적으로 전달하는 편집디자이너, 이희원입니다.
                     </p>
                     <p>
-                        타이포그래피, 레이아웃, 색채 이론을 기반으로 독자의 시선을 사로잡는 디자인을 만듭니다. 
-                        책, 잡지, 브로슈어부터 디지털 콘텐츠까지 다양한 매체에서 경험을 쌓아왔습니다.
+                        복잡한 내용을 단순하고 직관적으로 풀어내어, 보는 이가 자연스럽게 이해할 수 있는 디자인을 지향하고 있습니다. 
+                        세심한 구성과 깔끔한 레이아웃을 통해 메시지의 본질을 드러내는 작업을 합니다.
                     </p>
                     <p>
-                        디자인은 단순히 예쁜 것이 아니라, 효과적인 커뮤니케이션 도구라고 믿습니다. 
-                        항상 독자의 입장에서 생각하며, 정보와 감성이 조화를 이루는 작업물을 만들어갑니다.
+                        디자인을 통해 사람과 정보를 연결하고, 더 나은 시각적 경험을 만드는 것이 목표입니다.
                     </p>
                 </div>
             </section>
@@ -445,34 +480,29 @@
                 <h2 class="section-title">Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-card">
+                        <div class="skill-icon">✨</div>
+                        <h3>Illustrator</h3>
+                        <p>벡터 그래픽 및 로고 디자인</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🖼️</div>
+                        <h3>Photoshop</h3>
+                        <p>이미지 편집 및 합성</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">📖</div>
+                        <h3>InDesign</h3>
+                        <p>편집 디자인 및 레이아웃</p>
+                    </div>
+                    <div class="skill-card">
                         <div class="skill-icon">🎨</div>
-                        <h3>Editorial Design</h3>
-                        <p>책, 잡지, 브로슈어 등 다양한 인쇄물 디자인</p>
+                        <h3>Figma</h3>
+                        <p>UI/UX 및 프로토타이핑</p>
                     </div>
                     <div class="skill-card">
-                        <div class="skill-icon">✏️</div>
-                        <h3>Typography</h3>
-                        <p>한글/영문 타이포그래피 및 레터링</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">📐</div>
-                        <h3>Layout Design</h3>
-                        <p>그리드 시스템 기반 레이아웃 구성</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">🖥️</div>
-                        <h3>Digital Publishing</h3>
-                        <p>웹진, e-book 등 디지털 콘텐츠 제작</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">🎯</div>
-                        <h3>Brand Identity</h3>
-                        <p>브랜드 가이드 및 일관성 있는 디자인</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">📊</div>
-                        <h3>Infographic</h3>
-                        <p>데이터 시각화 및 정보 디자인</p>
+                        <div class="skill-icon">👥</div>
+                        <h3>Team Leadership</h3>
+                        <p>프로젝트 관리 및 협업</p>
                     </div>
                 </div>
             </section>
@@ -483,73 +513,57 @@
                 
                 <!-- 프로젝트 1 -->
                 <div class="project-card">
-                    <img src="https://via.placeholder.com/800x300/C7CEEA/2c3e50?text=Magazine+Layout" alt="매거진 레이아웃 프로젝트" class="project-image">
+                    <a href="https://ohwwho.github.io/images/project01.jpg" target="_blank">
+                        <img src="images/project01.jpg" alt="네일 잡지 Tickled Pink!" class="project-image">
+                    </a>
                     <div class="project-info">
-                        <h3>Culture & Art Magazine</h3>
+                        <h3>네일 잡지 'Tickled Pink!' 디자인</h3>
                         <p>
-                            문화예술 전문 매거진의 편집 디자인 작업입니다. 
-                            섬세한 타이포그래피와 여백의 조화를 통해 고급스러운 분위기를 연출했으며, 
-                            독자가 콘텐츠에 집중할 수 있도록 가독성을 최우선으로 고려했습니다.
+                            네일아트에 관한 다양한 정보를 알려주는 잡지 'Tickled Pink!' 디자인
                         </p>
                         <div class="project-tags">
-                            <span class="tag">Editorial Design</span>
-                            <span class="tag">Typography</span>
-                            <span class="tag">Print</span>
+                            <span class="tag">Illustrator</span>
+                            <span class="tag">Photoshop</span>
+                            <span class="tag">InDesign</span>
                         </div>
+                        <a href="https://ohwwho.github.io/images/project01.jpg" target="_blank" class="project-link">프로젝트 보기 →</a>
                     </div>
                 </div>
 
                 <!-- 프로젝트 2 -->
                 <div class="project-card">
-                    <img src="https://via.placeholder.com/800x300/FFE5EC/2c3e50?text=Book+Cover+Design" alt="북 커버 디자인" class="project-image">
+                    <a href="https://ohwwho.github.io/images/project02.jpg" target="_blank">
+                        <img src="images/project02.jpg" alt="아일릿 원희 포스터" class="project-image">
+                    </a>
                     <div class="project-info">
-                        <h3>Literary Book Cover Series</h3>
+                        <h3>아이돌 아일릿의 '원희' 포스터 디자인</h3>
                         <p>
-                            문학 시리즈 도서의 커버 디자인 작업입니다. 
-                            각 책의 내용과 분위기를 반영하면서도 시리즈로서의 통일감을 유지하도록 디자인했습니다. 
-                            심플한 일러스트와 타이포그래피의 조화로 감성적인 표현을 완성했습니다.
+                            아이돌인 아일릿 원희를 주제로 제작한 포스터
                         </p>
                         <div class="project-tags">
-                            <span class="tag">Book Design</span>
-                            <span class="tag">Illustration</span>
-                            <span class="tag">Series Design</span>
+                            <span class="tag">Illustrator</span>
+                            <span class="tag">Photoshop</span>
                         </div>
+                        <a href="https://ohwwho.github.io/images/project02.jpg" target="_blank" class="project-link">프로젝트 보기 →</a>
                     </div>
                 </div>
 
                 <!-- 프로젝트 3 -->
                 <div class="project-card">
-                    <img src="https://via.placeholder.com/800x300/ECFFF9/2c3e50?text=Brand+Brochure" alt="브랜드 브로슈어" class="project-image">
+                    <a href="https://ohwwho.github.io/images/project03.jpg" target="_blank">
+                        <img src="images/project03.jpg" alt="Wonderly 브랜딩" class="project-image">
+                    </a>
                     <div class="project-info">
-                        <h3>Corporate Brand Brochure</h3>
+                        <h3>상상을 기록하는 아카이빙 사이트 'Wonderly' 브랜딩</h3>
                         <p>
-                            기업 브랜드 소개 브로슈어 디자인입니다. 
-                            명확한 정보 전달과 함께 브랜드의 전문성과 신뢰감을 시각적으로 표현했습니다. 
-                            인포그래픽과 다이어그램을 활용하여 복잡한 정보를 직관적으로 이해할 수 있도록 구성했습니다.
+                            사용자가 상상을 더하여 기록을 하는 아카이브 브랜드 디자인 프로젝트.
                         </p>
                         <div class="project-tags">
-                            <span class="tag">Brochure Design</span>
-                            <span class="tag">Infographic</span>
-                            <span class="tag">Corporate</span>
+                            <span class="tag">Illustrator</span>
+                            <span class="tag">Photoshop</span>
+                            <span class="tag">Midjourney</span>
                         </div>
-                    </div>
-                </div>
-
-                <!-- 프로젝트 4 -->
-                <div class="project-card">
-                    <img src="https://via.placeholder.com/800x300/FFFFE3/2c3e50?text=Digital+Magazine" alt="디지털 매거진" class="project-image">
-                    <div class="project-info">
-                        <h3>Digital Lifestyle Web Magazine</h3>
-                        <p>
-                            라이프스타일 웹진의 디지털 편집 디자인 작업입니다. 
-                            다양한 디바이스에서 최적의 가독성을 제공하도록 반응형으로 설계했으며, 
-                            인터랙티브한 요소를 더해 독자의 몰입도를 높였습니다.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">Digital Publishing</span>
-                            <span class="tag">Responsive Design</span>
-                            <span class="tag">Web Magazine</span>
-                        </div>
+                        <a href="https://ohwwho.github.io/images/project03.jpg" target="_blank" class="project-link">프로젝트 보기 →</a>
                     </div>
                 </div>
             </section>
@@ -559,14 +573,21 @@
                 <h2 class="section-title">Contact</h2>
                 <div class="contact-info">
                     <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-                        프로젝트 문의나 협업 제안이 있으시다면<br>
-                        언제든지 연락 주세요!
+                        프로젝트 협업이나 외주 문의는 언제든 환영합니다!
                     </p>
-                    <div class="contact-links">
-                        <a href="mailto:heewon.lee@example.com" class="contact-btn">📧 Email</a>
-                        <a href="https://instagram.com" target="_blank" class="contact-btn">📸 Instagram</a>
-                        <a href="https://linkedin.com" target="_blank" class="contact-btn">💼 LinkedIn</a>
-                        <a href="https://behance.net" target="_blank" class="contact-btn">🎨 Behance</a>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <a href="mailto:ohwwho@gmail.com">ohwwho@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <a href="tel:010-0000-0000">010-0000-0000</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🌐</span>
+                            <a href="https://ohwwho.github.io/" target="_blank">ohwwho.github.io</a>
+                        </div>
                     </div>
                 </div>
             </section>
